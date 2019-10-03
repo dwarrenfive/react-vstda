@@ -1,62 +1,52 @@
-import React, { Component } from 'react';
-import AddTodo from './AddTodo';
-import TodoList from './TodoList';
+import React, { Component } from "react";
+import AddTodo from "./AddTodo";
+import TodoList from "./TodoList";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      priority: '1',
-      textArea: '',
-      newTodo: [],
-      editEnabled: false,
-      // newId: 0 += 1
-    }
+      priority: "1",
+      textArea: "",
+      newTodo: []
+    };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleNewTodo = this.handleNewTodo.bind(this);
-    this.handleTodoPriority = this.handleTodoPriority.bind(this);
+    this.handleArray = this.handleArray.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
   }
   handleChange(e) {
-    this.setState({ textArea: e.target.value })
+    this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleTodoPriority(e) {
-    this.setState({ priority: e.target.value })
+  handleArray(todoCopy) {
+    const newTodo = this.state.newTodo;
+    newTodo.push(todoCopy);
+    this.setState({ newTodo, textArea: "" });
   }
 
-  deleteTodoList() {
-    this.setState({ textArea: '' })
+  updateTodo(todoId, updateTodoItem, priority) {
+    const newTodo = [...this.state.newTodo];
+    const updatedTodo = [todoId, updateTodoItem, priority];
+    const spliceIndex = newTodo.map(todoItem => todoItem[0]).indexOf(todoId);
+    newTodo.splice(spliceIndex, 1, updatedTodo);
+    this.setState({ newTodo });
   }
-
-  // handleNewTodo() {
-  //   let todoCopy = this.state.newTodo
-  //   todoCopy.push({
-  //     textArea: this.state.textArea,
-  //     priority: this.state.priority,
-  //     editEnabled: this.state.editEnabled,
-  //     newId: this.state.newId += 1
-  //   })
-  //   this.setState({ newTodo: todoCopy })
-  //   console.log(todoCopy)
-  // }
 
   render() {
     return (
-      <div className='container mt-2'>
-        <h1 className='text-white'>Simple Todo App</h1>
-        <h4 className='text-white'>Track all of the things</h4>
+      <div className="container mt-2">
+        <h1 className="text-white">Simple Todo App</h1>
+        <h4 className="text-white">Track all of the things</h4>
         <hr style={{ borderTop: "1px solid white" }} />
         <div className="row">
           <AddTodo
-            handleTodoPriority={this.handleTodoPriority}
+            textArea={this.state.textArea}
+            priority={this.state.priority}
             handleChange={this.handleChange}
-            handleNewTodo={this.handleNewTodo}
-            deleteTodoList={this.deleteTodoList}
+            sendArray={this.handleArray}
           />
 
-          <TodoList
-            newTodo={this.state.newTodo}
-          />
+          <TodoList newTodo={this.state.newTodo} editTodo={this.updateTodo} />
         </div>
       </div>
     );
