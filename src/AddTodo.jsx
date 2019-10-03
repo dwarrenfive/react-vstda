@@ -5,38 +5,39 @@ class AddTodo extends React.Component {
     super(props);
 
     this.state = {
+      priority: "1",
       newId: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleNewTodo = this.handleNewTodo.bind(this);
+    this.handlePriority = this.handlePriority.bind(this);
   }
 
   handleChange(e) {
     this.props.handleChange(e);
   }
 
+  handlePriority(e) {
+    this.setState({ priority: e.target.value })
+  }
+
   handleNewTodo() {
     let todoCopy = [];
     let todoId = this.state.newId;
-    this.setState({ newId: (todoId += 1) });
-    let todoPriority = this.props.priority;
+    let todoPriority = this.state.priority;
+    this.setState({
+      newId: todoId + 1
+    });
     let textArea = this.props.textArea;
     todoCopy.push({
       textArea,
       todoPriority,
       todoId
     });
-    this.props.sendArray(todoCopy);
-    console.log(todoCopy);
+    this.props.handleNewTodo(todoCopy);
   }
 
   render() {
-    let alert = {
-      1: "alert-success",
-      2: "alert-warning",
-      3: "alert-danger"
-    };
-
     return (
       <div className="col-lg-4">
         <div className="card rounded-lg shadow-lg">
@@ -50,17 +51,17 @@ class AddTodo extends React.Component {
             ></textarea>
             <h6 className="mt-2">How much of a priority is this?</h6>
             <select
-              onChange={this.handleTodoPriority}
+              onChange={this.handlePriority}
               className="create-todo-priority btn border btn-block"
             >
               <option value="1">Select a Priority</option>
-              <option value="1" className={alert[1]}>
+              <option value="1" className="alert-success">
                 Priority Low
               </option>
-              <option value="2" className={alert[2]}>
+              <option value="2" className="alert-warning">
                 Priority Medium
               </option>
-              <option value="3" className={alert[3]}>
+              <option value="3" className="alert-danger">
                 Priority High
               </option>
             </select>

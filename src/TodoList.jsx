@@ -4,25 +4,26 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      editClicked: false
-    };
-
-    this.handleEdit = this.handleEdit.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
-  }
-
-  handleEdit() {
-    this.setState({ editClicked: true });
+    // this.handlePriority = this.handlePriority.bind(this);
   }
 
   updateTodo(todoId, updateTodoItem, priority) {
-    this.setState({ editClicked: false });
     this.props.editTodo(todoId, updateTodoItem, priority);
   }
 
+  // handlePriority(priority) {
+  //   if (priority == '1') {
+  //     return 'alert-success'
+  //   } else if (priority == '2') {
+  //     return 'alert-warning'
+  //   } else if (priority == '3') {
+  //     return 'alert-danger'
+  //   }
+  // }
+
   render() {
-    console.log(this.props.newTodo);
+    // console.log(this.props.newTodo)
     return (
       <div className="col-lg-8 col-sm-12">
         <div className="card rounded-ld shadow-lg">
@@ -33,18 +34,20 @@ class TodoList extends React.Component {
               <p className="no-margin">Get started now by adding a New Todo</p>
             </div>
           ) : (
-            <div className="card mb-0">
-              <ul className="list-group list-group-flush">
-                {this.props.newTodo.map(todo => {
-                  todo[1] === "1" ? (
-                    <li key={todo[3]} className="list-group-item alert-success">
-                      {todo[0]}
-                    </li>
-                  ) : null;
-                })}
-              </ul>
-            </div>
-          )}
+              <div className="card mb-0">
+                <ul className="list-group list-group-flush">
+                  {
+                    this.props.newTodo.map((todo) => {
+                      return (
+                        <li key={todo[0].todoId} id={"p" + todo[0].todoPriority} className="list-group-item">
+                          <input type='checkbox' />
+                          {todo[0].textArea}
+                        </li>
+                      )
+                    })}
+                </ul>
+              </div>
+            )}
         </div>
       </div>
     );
