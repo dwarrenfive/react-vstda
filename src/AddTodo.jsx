@@ -5,16 +5,17 @@ class AddTodo extends React.Component {
     super(props);
 
     this.state = {
-      priority: "1",
+      textArea: '',
+      priority: '1',
       newId: 0
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleNewTodo = this.handleNewTodo.bind(this);
     this.handlePriority = this.handlePriority.bind(this);
+    this.handleNewTodo = this.handleNewTodo.bind(this);
   }
 
   handleChange(e) {
-    this.props.handleChange(e);
+    this.setState({ textArea: e.target.value })
   }
 
   handlePriority(e) {
@@ -22,19 +23,15 @@ class AddTodo extends React.Component {
   }
 
   handleNewTodo() {
-    let todoCopy = [];
-    let todoId = this.state.newId;
-    let todoPriority = this.state.priority;
+    let todoListItem = {
+      text: this.state.textArea,
+      priority: this.state.priority,
+      id: Math.random(this.state.newId)
+    }
+    this.props.handleNewTodo(todoListItem)
     this.setState({
-      newId: todoId + 1
-    });
-    let textArea = this.props.textArea;
-    todoCopy.push({
-      textArea,
-      todoPriority,
-      todoId
-    });
-    this.props.handleNewTodo(todoCopy);
+      textArea: ''
+    })
   }
 
   render() {
@@ -46,7 +43,7 @@ class AddTodo extends React.Component {
             <h6 className="text-black">I want to...</h6>
             <textarea
               onChange={this.handleChange}
-              value={this.props.textArea}
+              value={this.state.textArea}
               className="create-todo-text"
             ></textarea>
             <h6 className="mt-2">How much of a priority is this?</h6>
@@ -69,7 +66,7 @@ class AddTodo extends React.Component {
           <div className="card-footer">
             <button
               onClick={this.handleNewTodo}
-              className="btn btn-success btn-block"
+              className="create-todo btn btn-success btn-block"
             >
               Add
             </button>

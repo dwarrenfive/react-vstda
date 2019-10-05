@@ -7,9 +7,9 @@ class TodoList extends React.Component {
     this.state = {
       editClicked: false
     }
-    this.updateTodo = this.updateTodo.bind(this);
+    // this.updateTodo = this.updateTodo.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    // this.deleteElement = this.deleteElement.bind(this);
+    this.deleteListItem = this.deleteListItem.bind(this);
   }
 
   handleEdit() {
@@ -18,13 +18,13 @@ class TodoList extends React.Component {
     })
   }
 
-  updateTodo(todoId, updateTodoItem, priority) {
-    this.props.editTodo(todoId, updateTodoItem, priority);
-  }
-
-  // deleteElement(i) {
-  //   this.props.deleteFunc(i)
+  // updateTodo(todoId, updateTodoItem, priority) {
+  //   this.props.editTodo(todoId, updateTodoItem, priority);
   // }
+
+  deleteListItem(id) {
+    this.props.deleteFunc(id)
+  }
 
   render() {
     return (
@@ -42,10 +42,10 @@ class TodoList extends React.Component {
                   {
                     this.props.newTodo.map((todo) => {
                       return (
-                        <li key={todo[0].todoId} id={"p" + todo[0].todoPriority} className="list-group-item">
+                        <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
                           <input type='checkbox' />
-                          {todo[0].textArea}
-                          <button className='delete-todo btn float-right' onClick={this.props.deleteFunc}>
+                          {todo.text}
+                          <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
                             <i className="fas fa-recycle"></i>
                           </button>
                           <button className='edit-todo btn float-right'>
