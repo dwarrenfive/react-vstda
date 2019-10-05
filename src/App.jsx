@@ -24,6 +24,23 @@ class App extends Component {
     this.setState({ newTodo: todo, textArea: '' });
   }
 
+  deleteObject(i) {
+    let todoListCopy = this.state.newTodo.slice();
+    todoListCopy.splice(i, 1);
+    this.setState({ newTodo: todoListCopy });
+    // const newTodo = [...this.state.newTodo];
+    // const spliceIndex = newTodo.map(todoItem => todoItem[0]).indexOf(todoId);
+    // newTodo.slice(spliceIndex, 1);
+    // this.setState({ newTodo });
+    // console.log(spliceIndex)
+  }
+
+  // delete(todoId) {
+  //   this.setState({
+  //     newTodo: this.state.newTodo.filter((x) => x.todo[0].todoId != todoId)
+  //   });
+  // }
+
   render() {
     return (
       <div className='container mt-2'>
@@ -40,6 +57,7 @@ class App extends Component {
 
           <TodoList
             newTodo={this.state.newTodo}
+            deleteFunc={this.deleteObject.bind(this)}
           />
         </div>
       </div>

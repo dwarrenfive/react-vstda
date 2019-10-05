@@ -4,26 +4,29 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      editClicked: false
+    }
     this.updateTodo = this.updateTodo.bind(this);
-    // this.handlePriority = this.handlePriority.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    // this.deleteElement = this.deleteElement.bind(this);
+  }
+
+  handleEdit() {
+    this.setState({
+      editClicked: true
+    })
   }
 
   updateTodo(todoId, updateTodoItem, priority) {
     this.props.editTodo(todoId, updateTodoItem, priority);
   }
 
-  // handlePriority(priority) {
-  //   if (priority == '1') {
-  //     return 'alert-success'
-  //   } else if (priority == '2') {
-  //     return 'alert-warning'
-  //   } else if (priority == '3') {
-  //     return 'alert-danger'
-  //   }
+  // deleteElement(i) {
+  //   this.props.deleteFunc(i)
   // }
 
   render() {
-    // console.log(this.props.newTodo)
     return (
       <div className="col-lg-8 col-sm-12">
         <div className="card rounded-ld shadow-lg">
@@ -42,6 +45,12 @@ class TodoList extends React.Component {
                         <li key={todo[0].todoId} id={"p" + todo[0].todoPriority} className="list-group-item">
                           <input type='checkbox' />
                           {todo[0].textArea}
+                          <button className='delete-todo btn float-right' onClick={this.props.deleteFunc}>
+                            <i className="fas fa-recycle"></i>
+                          </button>
+                          <button className='edit-todo btn float-right'>
+                            <i className="fas fa-user-edit"></i>
+                          </button>
                         </li>
                       )
                     })}
