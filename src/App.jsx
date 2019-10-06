@@ -10,6 +10,7 @@ class App extends Component {
     };
     this.handleObject = this.handleObject.bind(this);
     this.deleteObject = this.deleteObject.bind(this);
+    this.updateObject = this.updateObject.bind(this);
   }
 
   handleObject(todoItem) {
@@ -18,9 +19,15 @@ class App extends Component {
     this.setState({ newTodo: todo });
   }
 
+  updateObject(updateItem, UpdatePriority, UpdateId) {
+    const todo = this.state.newTodo;
+    todo.push(updateItem, UpdatePriority, UpdateId);
+    this.setState({ newTodo: todo });
+  }
+
   deleteObject(id) {
     this.setState({
-      newTodo: this.state.newTodo.filter((x) => x.id != id)
+      newTodo: this.state.newTodo.filter(x => x.id != id)
     });
   }
 
@@ -38,6 +45,7 @@ class App extends Component {
           <TodoList
             newTodo={this.state.newTodo}
             deleteFunc={this.deleteObject}
+            updateObject={this.updateObject}
           />
         </div>
       </div>

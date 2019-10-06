@@ -1,4 +1,5 @@
 import React from "react";
+import UpdateTodo from './UpdateTodo'
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class TodoList extends React.Component {
     this.state = {
       editClicked: false
     }
-    // this.updateTodo = this.updateTodo.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.deleteListItem = this.deleteListItem.bind(this);
   }
@@ -18,9 +19,9 @@ class TodoList extends React.Component {
     })
   }
 
-  // updateTodo(todoId, updateTodoItem, priority) {
-  //   this.props.editTodo(todoId, updateTodoItem, priority);
-  // }
+  updateTodo(updateItem, UpdatePriority, UpdateId) {
+    this.props.updateObject(updateItem, UpdatePriority, UpdateId);
+  }
 
   deleteListItem(id) {
     this.props.deleteFunc(id)
@@ -48,9 +49,10 @@ class TodoList extends React.Component {
                           <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
                             <i className="fas fa-recycle"></i>
                           </button>
-                          <button className='edit-todo btn float-right'>
+                          <button className='edit-todo btn float-right' onClick={() => this.updateObject(todo.text, todo.priority, todo.id)}>
                             <i className="fas fa-user-edit"></i>
                           </button>
+                          <UpdateTodo />
                         </li>
                       )
                     })}
