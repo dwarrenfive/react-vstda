@@ -5,13 +5,13 @@ class UpdateTodo extends React.Component {
         super(props);
 
         this.state = {
-            textArea: '',
-            priority: '1',
-            newId: 0
+            updatedTextArea: this.props.todoItem[0],
+            updatedPriority: this.props.todoItem[1],
+            updatedId: this.props.todoItem[2]
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePriority = this.handlePriority.bind(this);
-        this.handleNewTodo = this.handleNewTodo.bind(this);
+        this.handleUpdatedTodo = this.handleUpdatedTodo.bind(this);
     }
 
     handleChange(e) {
@@ -22,33 +22,28 @@ class UpdateTodo extends React.Component {
         this.setState({ priority: e.target.value })
     }
 
-    handleNewTodo() {
-        let todoListItem = {
-            text: this.state.textArea,
-            priority: this.state.priority,
-            id: Math.random(this.state.newId)
-        }
-        this.props.handleNewTodo(todoListItem)
-        this.setState({
-            textArea: ''
-        })
+    handleUpdatedTodo() {
+        this.props.updatedTodo(
+            this.state.updatedTextArea,
+            this.state.updatedPriority,
+            this.state.updateId
+        )
     }
 
     render() {
         return (
-            <div className="col-lg-8 col-sm-12">
-                <div className="card rounded-ld shadow-lg">
-                    <div className="card-header">Description</div>
-                    <div className="card-body">
+            <div className="card mb-0">
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <div>Description</div>
                         <textarea
                             onChange={this.handleChange}
-                            value={this.state.textArea}
                             className="update-todo-text"
                         ></textarea>
                         <h6 className="mt-2">Change priority?</h6>
                         <select
                             onChange={this.handlePriority}
-                            className="update-todo-priority btn border btn-block">
+                            className="update-todo-priority btn border">
                             <option value="1">Select a Priority</option>
                             <option value="1" className="alert-success">
                                 Priority Low
@@ -60,16 +55,14 @@ class UpdateTodo extends React.Component {
                                 Priority High
                             </option>
                         </select>
-                    </div>
-                    <div className="card-footer">
+                        <br />
                         <button
-                            onClick={this.handleNewTodo}
-                            className="update-todo btn btn-success btn-block"
-                        >
+                            onClick={this.handleUpdatedTodo}
+                            className="update-todo btn btn-success float-right">
                             Save
-            </button>
-                    </div>
-                </div>
+                        </button>
+                    </li>
+                </ul>
             </div>
         );
     }

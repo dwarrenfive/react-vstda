@@ -8,21 +8,23 @@ class App extends Component {
     this.state = {
       newTodo: []
     };
-    this.handleObject = this.handleObject.bind(this);
+    this.newObject = this.newObject.bind(this);
     this.deleteObject = this.deleteObject.bind(this);
     this.updateObject = this.updateObject.bind(this);
   }
 
-  handleObject(todoItem) {
+  newObject(todoItem) {
     const todo = this.state.newTodo;
     todo.push(todoItem);
     this.setState({ newTodo: todo });
   }
 
-  updateObject(updateItem, UpdatePriority, UpdateId) {
-    const todo = this.state.newTodo;
-    todo.push(updateItem, UpdatePriority, UpdateId);
-    this.setState({ newTodo: todo });
+  updateObject(todoText, todoPriority, todoId) {
+    const newTodo = [...this.state.newTodo];
+    const updatedTodo = [todoText, todoPriority, todoId];
+    const spliced = newTodo.map(todo => todo.indexOf(todo.id))
+    newTodo.splice(spliced, 1, updatedTodo)
+    this.setState({ newTodo });
   }
 
   deleteObject(id) {
@@ -39,13 +41,13 @@ class App extends Component {
         <hr style={{ borderTop: "1px solid white" }} />
         <div className="row">
           <AddTodo
-            handleNewTodo={this.handleObject}
+            handleNewTodo={this.newObject}
           />
 
           <TodoList
             newTodo={this.state.newTodo}
             deleteFunc={this.deleteObject}
-            updateObject={this.updateObject}
+            handleUpdatedTodo={this.updateObject}
           />
         </div>
       </div>
