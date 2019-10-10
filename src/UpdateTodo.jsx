@@ -3,11 +3,10 @@ import React from "react";
 class UpdateTodo extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            updatedTextArea: this.props.todoItem[0],
-            updatedPriority: this.props.todoItem[1],
-            updatedId: this.props.todoItem[2]
+            updatedText: this.props.todoItem.text,
+            updatedPriority: this.props.todoItem.priority,
+            updatedId: this.props.todoItem.id
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePriority = this.handlePriority.bind(this);
@@ -15,18 +14,18 @@ class UpdateTodo extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ textArea: e.target.value })
+        this.setState({ updatedText: e.target.value })
     }
 
     handlePriority(e) {
-        this.setState({ priority: e.target.value })
+        this.setState({ updatedPriority: e.target.value })
     }
 
     handleUpdatedTodo() {
-        this.props.updatedTodo(
-            this.state.updatedTextArea,
+        this.props.callbackFromUpdate(
+            this.state.updatedText,
             this.state.updatedPriority,
-            this.state.updateId
+            this.state.updatedId
         )
     }
 

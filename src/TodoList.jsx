@@ -4,7 +4,6 @@ import UpdateTodo from './UpdateTodo'
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       editClicked: false
     }
@@ -19,9 +18,9 @@ class TodoList extends React.Component {
     })
   }
 
-  updatedObject(todoText, todoPriority, todoId) {
+  updatedObject(todoItem, todoPriority, todoId) {
     this.setState({ editClicked: false });
-    this.props.handleUpdatedTodo(todoText, todoPriority, todoId)
+    this.props.callbackFromApp(todoItem, todoPriority, todoId)
   }
 
   deleteListItem(id) {
@@ -59,7 +58,7 @@ class TodoList extends React.Component {
                               <UpdateTodo
                                 todoItem={this.props.newTodo[i]}
                                 editClicked={this.state.editClicked}
-                                updatedTodo={this.updatedObject}
+                                callbackFromUpdate={this.updatedObject}
                               />
                               : null
                             }
