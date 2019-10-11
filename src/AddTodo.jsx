@@ -26,7 +26,7 @@ class AddTodo extends React.Component {
     let todoListItem = {
       text: this.state.textArea,
       priority: this.state.priority,
-      id: Math.random(this.state.newId)
+      id: this.state.newId += 1
     }
     this.props.handleNewTodo(todoListItem)
     this.setState({

@@ -41,31 +41,28 @@ class TodoList extends React.Component {
               <div className="card mb-0">
                 <ul className="list-group list-group-flush">
                   {
-                    this.props.newTodo.map((todo, i) => {
-                      console.log(todo)
-                      return (
-                        todo.priority >= 1 ?
-                          <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
-                            <input type='checkbox' />
-                            {todo.text}
-                            <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
-                              <i className="fas fa-recycle"></i>
-                            </button>
-                            <button className='edit-todo btn float-right' onClick={this.handleEdit}>
-                              <i className="fas fa-user-edit"></i>
-                            </button>
-                            {this.state.editClicked === true ?
-                              <UpdateTodo
-                                todoItem={this.props.newTodo[i]}
-                                editClicked={this.state.editClicked}
-                                callbackFromUpdate={this.updatedObject}
-                              />
-                              : null
-                            }
-                          </li>
-                          : null
-                      )
-                    })}
+                    this.props.newTodo.map((todo, i) => (
+                      this.props.newTodo[i] == this.props.newTodo[i] ?
+                        <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
+                          <input type='checkbox' />
+                          {todo.text}
+                          <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
+                            <i className="fas fa-recycle"></i>
+                          </button>
+                          <button className='edit-todo btn float-right' onClick={this.handleEdit}>
+                            <i className="fas fa-user-edit"></i>
+                          </button>
+                          {this.state.editClicked === true ?
+                            <UpdateTodo
+                              todoItem={this.props.newTodo[i]}
+                              callbackFromUpdate={this.updatedObject}
+                            />
+                            : null
+                          }
+                        </li>
+                        : null
+                    )
+                    )}
                 </ul>
               </div>
             )}
