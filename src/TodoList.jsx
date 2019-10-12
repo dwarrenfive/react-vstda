@@ -13,14 +13,20 @@ class TodoList extends React.Component {
   }
 
   handleEdit() {
+    // let tempEdit = this.props.newTodo;
+    // for (let i = 0; i < tempEdit.length; i++) {
+    //   console.log(tempEdit[i].id)
+    //   if (tempEdit[i] === tempEdit[i]) {
     this.setState({
       editClicked: true
     })
   }
 
-  updatedObject(todoItem, todoPriority, todoId) {
+  updatedObject(todoText, todoPriority, todoId) {
     this.setState({ editClicked: false });
-    this.props.callbackFromApp(todoItem, todoPriority, todoId)
+    console.log(this.props.newTodo)
+    // console.log(todoText, todoPriority, todoId)
+    this.props.callbackFromApp(todoText, todoPriority, todoId)
   }
 
   deleteListItem(id) {
@@ -41,8 +47,8 @@ class TodoList extends React.Component {
               <div className="card mb-0">
                 <ul className="list-group list-group-flush">
                   {
-                    this.props.newTodo.map((todo, i) => (
-                      this.props.newTodo[i] == this.props.newTodo[i] ?
+                    this.props.newTodo.map((todo) => (
+                      todo.priority == '1', '2', '3' ?
                         <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
                           <input type='checkbox' />
                           {todo.text}
@@ -54,7 +60,7 @@ class TodoList extends React.Component {
                           </button>
                           {this.state.editClicked === true ?
                             <UpdateTodo
-                              todoItem={this.props.newTodo[i]}
+                              todoItem={todo}
                               callbackFromUpdate={this.updatedObject}
                             />
                             : null

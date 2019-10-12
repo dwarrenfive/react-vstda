@@ -6,7 +6,8 @@ class UpdateTodo extends React.Component {
         this.state = {
             updatedText: this.props.todoItem.text,
             updatedPriority: this.props.todoItem.priority,
-            updatedId: this.props.todoItem.id
+            updatedId: this.props.todoItem.id,
+            index: this.props.todoItem.i
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePriority = this.handlePriority.bind(this);
@@ -25,7 +26,8 @@ class UpdateTodo extends React.Component {
         this.props.callbackFromUpdate(
             this.state.updatedText,
             this.state.updatedPriority,
-            this.state.updatedId
+            this.state.updatedId,
+            this.state.index
         )
     }
 

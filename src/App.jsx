@@ -19,12 +19,11 @@ class App extends Component {
     this.setState({ newTodo: todo });
   }
 
-  updateObject(text, priority, id) {
+  updateObject(text, priority, id, i) {
     const editTodo = this.state.newTodo;
     const updatedTodo = { text, priority, id };
-    console.log(updatedTodo);
-    const splice = editTodo.map(todo => todo[0]).indexOf(id);
-    editTodo.splice(splice, 1, updatedTodo)
+    editTodo.splice(i, 1, updatedTodo)
+    console.log(editTodo)
     this.setState({ editTodo });
   }
 
