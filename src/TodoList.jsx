@@ -12,20 +12,20 @@ class TodoList extends React.Component {
     this.deleteListItem = this.deleteListItem.bind(this);
   }
 
-  handleEdit() {
-    // let tempEdit = this.props.newTodo;
-    // for (let i = 0; i < tempEdit.length; i++) {
-    //   console.log(tempEdit[i].id)
-    //   if (tempEdit[i] === tempEdit[i]) {
-    this.setState({
-      editClicked: true
-    })
+  handleEdit(id) {
+    let tempEdit = this.props.newTodo;
+    for (let i = 0; i < tempEdit.length; i++) {
+      console.log(tempEdit[i].id)
+      if (tempEdit[i].id === id) {
+        this.setState({
+          editClicked: true
+        })
+      }
+    }
   }
 
   updatedObject(todoText, todoPriority, todoId) {
     this.setState({ editClicked: false });
-    console.log(this.props.newTodo)
-    // console.log(todoText, todoPriority, todoId)
     this.props.callbackFromApp(todoText, todoPriority, todoId)
   }
 
@@ -55,7 +55,7 @@ class TodoList extends React.Component {
                           <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
                             <i className="fas fa-recycle"></i>
                           </button>
-                          <button className='edit-todo btn float-right' onClick={this.handleEdit}>
+                          <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
                             <i className="fas fa-user-edit"></i>
                           </button>
                           {this.state.editClicked === true ?

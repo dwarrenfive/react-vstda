@@ -19,11 +19,11 @@ class App extends Component {
     this.setState({ newTodo: todo });
   }
 
-  updateObject(text, priority, id, i) {
+  updateObject(text, priority, id) {
     const editTodo = this.state.newTodo;
     const updatedTodo = { text, priority, id };
-    editTodo.splice(i, 1, updatedTodo)
-    console.log(editTodo)
+    const spliceIndex = editTodo.map(todoItem => todoItem.id).indexOf(id);
+    editTodo.splice(spliceIndex, 1, updatedTodo)
     this.setState({ editTodo });
   }
 
@@ -43,7 +43,6 @@ class App extends Component {
           <AddTodo
             handleNewTodo={this.newObject}
           />
-
           <TodoList
             newTodo={this.state.newTodo}
             deleteFunc={this.deleteObject}
