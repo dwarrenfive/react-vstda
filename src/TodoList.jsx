@@ -13,15 +13,16 @@ class TodoList extends React.Component {
   }
 
   handleEdit(id) {
-    let tempEdit = this.props.newTodo;
-    for (let i = 0; i < tempEdit.length; i++) {
-      console.log(tempEdit[i].id)
-      if (tempEdit[i].id === id) {
-        this.setState({
-          editClicked: true
-        })
-      }
-    }
+    let index = this.props.newTodo.map(i => i.id).indexOf(id);
+    let position = index + 1;
+    console.log(position)
+    console.log(index)
+    console.log(id)
+    if (position == id) {
+      this.setState({
+        editClicked: true
+      })
+    } null
   }
 
   updatedObject(todoText, todoPriority, todoId) {
@@ -48,16 +49,24 @@ class TodoList extends React.Component {
                 <ul className="list-group list-group-flush">
                   {
                     this.props.newTodo.map((todo) => (
-                      todo.priority == '1', '2', '3' ?
+                      todo.id >= 1 ?
                         <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
-                          <input type='checkbox' />
-                          {todo.text}
-                          <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
-                            <i className="fas fa-recycle"></i>
-                          </button>
-                          <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
-                            <i className="fas fa-user-edit"></i>
-                          </button>
+                          {this.state.editClicked === false ?
+                            <input type='checkbox' />
+                            : null}
+                          {this.state.editClicked === false ?
+                            todo.text
+                            : null}
+                          {this.state.editClicked === false ?
+                            <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
+                              <i className="fas fa-recycle"></i>
+                            </button>
+                            : null}
+                          {this.state.editClicked === false ?
+                            <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
+                              <i className="fas fa-user-edit"></i>
+                            </button>
+                            : null}
                           {this.state.editClicked === true ?
                             <UpdateTodo
                               todoItem={todo}

@@ -38,6 +38,7 @@ class UpdateTodo extends React.Component {
                         <textarea
                             onChange={this.handleChange}
                             className="update-todo-text"
+                            value={this.state.updatedText}
                         ></textarea>
                         <h6 className="mt-2">Change priority?</h6>
                         <select
