@@ -5,7 +5,7 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editClicked: false
+      editClicked: 0
     }
     this.handleEdit = this.handleEdit.bind(this);
     this.updatedObject = this.updatedObject.bind(this);
@@ -13,20 +13,11 @@ class TodoList extends React.Component {
   }
 
   handleEdit(id) {
-    let index = this.props.newTodo.map(i => i.id).indexOf(id);
-    let position = index + 1;
-    console.log(position)
-    console.log(index)
-    console.log(id)
-    if (position == id) {
-      this.setState({
-        editClicked: true
-      })
-    } null
+    this.setState({ editClicked: id })
   }
 
   updatedObject(todoText, todoPriority, todoId) {
-    this.setState({ editClicked: false });
+    this.setState({ editClicked: null });
     this.props.callbackFromApp(todoText, todoPriority, todoId)
   }
 
@@ -51,29 +42,23 @@ class TodoList extends React.Component {
                     this.props.newTodo.map((todo) => (
                       todo.id >= 1 ?
                         <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
-                          {this.state.editClicked === false ?
-                            <input type='checkbox' />
-                            : null}
-                          {this.state.editClicked === false ?
-                            todo.text
-                            : null}
-                          {this.state.editClicked === false ?
-                            <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
-                              <i className="fas fa-recycle"></i>
-                            </button>
-                            : null}
-                          {this.state.editClicked === false ?
-                            <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
-                              <i className="fas fa-user-edit"></i>
-                            </button>
-                            : null}
-                          {this.state.editClicked === true ?
+                          {
+                            <div>
+                              <input type='checkbox' />
+                              {todo.text}
+                              <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
+                                <i className="fas fa-recycle"></i>
+                              </button>
+                              <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
+                                <i className="fas fa-user-edit"></i>
+                              </button>
+                            </div>
+                          }
+                          {this.state.editClicked == todo.id ?
                             <UpdateTodo
                               todoItem={todo}
                               callbackFromUpdate={this.updatedObject}
-                            />
-                            : null
-                          }
+                            /> : null}
                         </li>
                         : null
                     )
