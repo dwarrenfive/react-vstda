@@ -17,7 +17,7 @@ class TodoList extends React.Component {
   }
 
   updatedObject(todoText, todoPriority, todoId) {
-    this.setState({ editClicked: null });
+    this.setState({ editClicked: 0 });
     this.props.callbackFromApp(todoText, todoPriority, todoId)
   }
 
@@ -42,7 +42,7 @@ class TodoList extends React.Component {
                     this.props.newTodo.map((todo) => (
                       todo.id >= 1 ?
                         <li key={todo.id} id={"p" + todo.priority} className="list-group-item">
-                          {
+                          {this.state.editClicked == 0 ?
                             <div>
                               <input type='checkbox' />
                               {todo.text}
@@ -53,6 +53,18 @@ class TodoList extends React.Component {
                                 <i className="fas fa-user-edit"></i>
                               </button>
                             </div>
+                            : this.state.editClicked != 0 && todo.id > this.state.editClicked || todo.id < this.state.editClicked ?
+                              <div>
+                                <input type='checkbox' />
+                                {todo.text}
+                                <button className='delete-todo btn float-right' onClick={() => this.deleteListItem(todo.id)}>
+                                  <i className="fas fa-recycle"></i>
+                                </button>
+                                <button className='edit-todo btn float-right' onClick={() => this.handleEdit(todo.id)}>
+                                  <i className="fas fa-user-edit"></i>
+                                </button>
+                              </div>
+                              : null
                           }
                           {this.state.editClicked == todo.id ?
                             <UpdateTodo
